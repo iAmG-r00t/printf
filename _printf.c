@@ -1,31 +1,35 @@
 #include "holberton.h"
 
 /**
- * _printf - print string as printf
- * @format: number of arguments
- * Return: void
- **/
+ * _printf - a function that produces output according to a format.
+ *
+ * @format: character string.
+ *
+ * Return: the number of characters printed
+ *         (excluding the null byte used to
+ *         end output to strings.)
+*/
+
 int _printf(const char *format, ...)
 {
-	va_list ap;
-	unsigned int i, result;
+	va_list arg; /*points to each unnamed arg in trun */
+	int mods;
 
-	result = 0;
-	va_start(ap, format);
+	mod_t format_list[] = {
+		{"c", print_char},
+		{"s", print_string},
+		{"d", print_digit},
+		{"i", print_digit}
+	};
 
-	for (i = 0; format[i] != '\0'; i++)
-	{
-		if (format[i] == '%')
-		{
-			result += pull_print(format[i + 1], &ap);
-			i++;
-		}
-		else
-		{
-			_putchar(format[i]);
-			result++;
-		}
-	}
-	va_end(ap);
-	return (result);
+	if (format == NULL)
+		return (-1);
+
+	va_start(arg, format);
+
+	mods = print_modifier(format, arg, format_list);
+
+	return (mods);
+
+	va_end(arg);
 }
