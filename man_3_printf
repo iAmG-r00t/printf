@@ -123,4 +123,4 @@ int main(void)
 .SH SEE ALSO
 .R printf(3)
 .SH AUTHORS
-Written by \Peter Numi\fR and \Michael Ndula\fR.
+Written by Peter Numi and Michael Ndula.
