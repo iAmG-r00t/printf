@@ -1,44 +1,49 @@
 #include "holberton.h"
+
 /**
- * _printf - A printf clone
- * @format: const pointer to a char - % include formats
- * Return: number of characters printed.
-*/
+ * _printf - prints anything
+ * @format: the format string
+ *
+ * Return: number of bytes printed
+ */
 int _printf(const char *format, ...)
 {
-	int i = 0, *count, *count3;
-	int ctbuffer[2];
-	int ctbuffer3[2];
-	char *copyfmt;
-	char copyarray[10000];
-	va_list args;
+	int sum = 0;
+	va_list ap;
+	char *p, *start;
+	params_t params = PARAMS_INIT;
 
-	count = &ctbuffer[0];
-	count3 = &ctbuffer3[0];
-	count[0] = 0;
-	count[1] = -1;
-	if (format != NULL)
+	va_start(ap, format);
+
+	if (!format || (format[0] == '%' && !format[1]))
+		return (-1);
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
+		return (-1);
+	for (p = (char *)format; *p; p++)
 	{
-		count[1] = 0;
-		copyfmt = _strcpy(copyarray, format);
-		va_start(args, format);
-		while (copyfmt[i] != '\0')
+		init_params(&params, ap);
+		if (*p != '%')
 		{
-			if (copyfmt[i] == '%')
-			{
-				count3 = print_formats(i, copyfmt, args);
-				if (count3[1] == -1)
-				return (-1);
-				count[1] += count3[1];
-				i += count3[0];
-			}
-			else
-			{
-				count[1] += _putchar(&copyfmt[i]);
-			}
-			i++;
+			sum += _putchar(*p);
+			continue;
 		}
-		va_end(args);
+		start = p;
+		p++;
+		while (get_flag(p, &params)) /* while char at p is flag char */
+		{
+			p++; /* next char */
+		}
+		p = get_width(p, &params, ap);
+		p = get_precision(p, &params, ap);
+		if (get_modifier(p, &params))
+			p++;
+		if (!get_specifier(p))
+			sum += print_from_to(start, p,
+				params.l_modifier || params.h_modifier ? p - 1 : 0);
+		else
+			sum += get_print_func(p, ap, &params);
 	}
-return (count[1]);
+	_putchar(BUF_FLUSH);
+	va_end(ap);
+	return (sum);
 }
