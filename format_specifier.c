@@ -1,72 +1,50 @@
-#include "holberton.h"
+include "holberton.h"
 /**
- * print_char - Prints character
- * @list: list of arguments
- * Return: Will return the amount of characters printed.
- */
-int print_char(va_list list)
+ * print_formats - compares and prints according to the struct
+ * @i:. iterator
+ * @copyfmt: format
+ * @args: arguments to print
+ * Return: number of characters printed.
+*/
+int *print_formats(int i, char *copyfmt, va_list args)
 {
-	_write_char(va_arg(list, int));
-	return (1);
-}
+	fn_t fmt[] = {
+			{"c", p_char},
+			{"s", p_string},
+			{"%", p_percent},
+			{"i", p_int},
+			{"d", p_int},
+			{"b", p_bin},
+			{"r", p_rev},
+			{"u", p_unsigned},
+			{"o", p_octal},
+			{"x", p_hex_low},
+			{"X", p_hex_upper},
+			{"S", p_string_esp},
+			{"p", p_add},
+			{"R", p_rot13},
+			{NULL, NULL}
+			};
+	int j = 0, k = 1, *count2;
+	int ctbuffer2[2];
 
-/**
- * print_string - Prints a string
- * @list: list of arguments
- * Return: Will return the amount of characters printed.
- */
-int print_string(va_list list)
-{
-	int i;
-	char *str;
-
-	str = va_arg(list, char *);
-	if (str == NULL)
-		str = "(null)";
-	for (i = 0; str[i] != '\0'; i++)
-		_write_char(str[i]);
-	return (i);
-}
-
-/**
- * print_percent - Prints a percent symbol
- * @list: list of arguments
- * Return: Will return the amount of characters printed.
- */
-int print_percent(__attribute__((unused))va_list list)
-{
-	_write_char('%');
-	return (1);
-}
-
-/**
- * print_integer - Prints an integer
- * @list: list of arguments
- * Return: Will return the amount of characters printed.
- */
-int print_integer(va_list list)
-{
-	int num_length;
-
-	num_length = print_number(list);
-	return (num_length);
-}
-
-/**
- * unsigned_integer - Prints Unsigned integers
- * @list: List of all of the argumets
- * Return: a count of the numbers
- */
-int unsigned_integer(va_list list)
-{
-	unsigned int num;
-
-	num = va_arg(list, unsigned int);
-
-	if (num == 0)
-		return (print_unsgined_number(num));
-
-	if (num < 1)
-		return (-1);
-	return (print_unsgined_number(num));
+	i++;
+	count2 = &ctbuffer2[0];
+	count2[0] = 0;
+	count2[1] = 0;
+	while (fmt[j].ob != NULL)
+	{
+		if (copyfmt[i] == *fmt[j].ob)
+		{ count2[1] = fmt[j].type(args);
+			break; }
+		j++;
+	}
+	if (fmt[j].ob == NULL && copyfmt[i] != '\0')
+	{ _putchar("%");
+	_putchar(&copyfmt[i]);
+	count2[1] += 2; }
+	if (fmt[j].ob == NULL && copyfmt[i] == '\0')
+	{ count2[1] = -1; }
+	count2[0] = k;
+return (count2);
 }
