@@ -23,7 +23,7 @@ int print_char(va_list arg)
  * @arg: a list of argument pointing to
  *       the character to be printed
  *
- * Return: Always 0 success
+ * Return: length of string
 */
 
 int print_string(va_list arg)
@@ -33,11 +33,11 @@ int print_string(va_list arg)
 
 	if (str == NULL)
 		str = "(nil)";
-	while (str[index])
+	while (str[index] != '\0')
 	{
 		_putchar(str[index]);
 		index++;
 	}
 
-	return (0);
+	return (index);
 }

@@ -9,6 +9,21 @@
 - [All About Printf](https://akshatshibu.wordpress.com/2015/07/22/all-about-printf/)
 
 
+## Description
+
+- The function `_printf` writes output to stdout. The function writes under the control of a `format` string that specifies how subsequent arguments (accessed via the variable-length argument facilities of standard library `stdarg`) are converted for output.
+
+- Prototype: `int _printf(const char *format, ...);`
+
+## Return
+
+- Upon success, `_printf` returns the number of characters printed (**excluding the terminating null byte used to end output to strings**). If an output error is encountered, the function returns `-1`.
+
+## Format of the Argument String
+
+- The `format` string argument is a constant character string composed of zero or more directives: ordinary characters (apart from `%`) which are copied unchanged to the output stream; and conversion specifications, each of which results in fetching zero or more subsequent arguments.
+- Conversion specification is introduced by the character `%` and ends with a conversion specifier (which in whole make up the format specifier.)
+
 ## General Requirements
 
 - All your files will be compiled on Ubuntu 20.04 LTS using `gcc`, using the options `-Wall -Werror -Wextra -pedantic -std=gnu89`
@@ -36,7 +51,7 @@
 
 - The code can be compiled like this:
 	```sh
-	gcc -Wall -Werror -Wextra -pedantic -std=gnu89 test/main.c *.c -o printf
+	gcc -Wall -Werror -Wextra -pedantic -std=gnu89 test/main.c *.c -o print
 	```
 - All test files will be in the [test](./test) directory.
 
@@ -44,7 +59,7 @@
 ### Authors
 
 - iAmG-r00t 👾
-- Michael Ndula [@Michaelndula](https://github.com/Michaelndula) 👨‍💻 
+- Michael Ndula [@Michaelndula](https://github.com/Michaelndula) 👨‍💻
 
 
 ## Tasks
