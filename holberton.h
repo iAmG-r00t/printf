@@ -4,7 +4,7 @@
 #include <unistd.h>
 #include <stdarg.h>
 
-#define SPECIFIERS 2
+#define SPECIFIERS 4
 
 /**
  * modifier - Defines a specifier to data types
@@ -24,6 +24,7 @@ typedef struct modifier
 int _putchar(char c);
 int print_char(va_list arg);
 int print_string(va_list arg);
+int print_digit(va_list arg);
 
 /* printf.c prototype */
 int _printf(const char *format, ...);

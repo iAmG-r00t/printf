@@ -17,7 +17,9 @@ int _printf(const char *format, ...)
 
 	mod_t format_list[] = {
 		{"c", print_char},
-		{"s", print_string}
+		{"s", print_string},
+		{"d", print_digit},
+		{"i", print_digit}
 	};
 
 	if (format == NULL)
