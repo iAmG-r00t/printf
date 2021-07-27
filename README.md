@@ -36,7 +36,7 @@
 
 - The code can be compiled like this:
 	```sh
-	gcc -Wall -Werror -Wextra -pedantic -std=gnu89 *.c
+	gcc -Wall -Werror -Wextra -pedantic -std=gnu89 test/main.c *.c -o printf
 	```
 - All test files will be in the [test](./test) directory.
 
