@@ -1,35 +1,44 @@
 #include "holberton.h"
-
 /**
- * _printf - a function that produces output according to a format.
- *
- * @format: character string.
- *
- * Return: the number of characters printed
- *         (excluding the null byte used to
- *         end output to strings.)
+ * _printf - A printf clone
+ * @format: const pointer to a char - % include formats
+ * Return: number of characters printed.
 */
-
 int _printf(const char *format, ...)
 {
-	va_list arg; /*points to each unnamed arg in trun */
-	int mods;
+	int i = 0, *count, *count3;
+	int ctbuffer[2];
+	int ctbuffer3[2];
+	char *copyfmt;
+	char copyarray[10000];
+	va_list args;
 
-	mod_t format_list[] = {
-		{"c", print_char},
-		{"s", print_string},
-		{"d", print_digit},
-		{"i", print_digit}
-	};
-
-	if (format == NULL)
-		return (-1);
-
-	va_start(arg, format);
-
-	mods = print_modifier(format, arg, format_list);
-
-	return (mods);
-
-	va_end(arg);
+	count = &ctbuffer[0];
+	count3 = &ctbuffer3[0];
+	count[0] = 0;
+	count[1] = -1;
+	if (format != NULL)
+	{
+		count[1] = 0;
+		copyfmt = _strcpy(copyarray, format);
+		va_start(args, format);
+		while (copyfmt[i] != '\0')
+		{
+			if (copyfmt[i] == '%')
+			{
+				count3 = print_formats(i, copyfmt, args);
+				if (count3[1] == -1)
+				return (-1);
+				count[1] += count3[1];
+				i += count3[0];
+			}
+			else
+			{
+				count[1] += _putchar(&copyfmt[i]);
+			}
+			i++;
+		}
+		va_end(args);
+	}
+return (count[1]);
 }
